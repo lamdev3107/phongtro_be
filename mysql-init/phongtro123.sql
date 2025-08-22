@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 22, 2025 at 09:48 AM
+-- Generation Time: Aug 22, 2025 at 12:14 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Addresses`
+-- Table structure for table `addresses`
 --
 
 CREATE TABLE `Addresses` (
@@ -40,7 +40,7 @@ CREATE TABLE `Addresses` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `Addresses`
+-- Dumping data for table `addresses`
 --
 
 INSERT INTO `Addresses` (`id`, `postId`, `province`, `district`, `ward`, `address`, `addressString`, `createdAt`, `updatedAt`) VALUES
@@ -52,7 +52,7 @@ INSERT INTO `Addresses` (`id`, `postId`, `province`, `district`, `ward`, `addres
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Attributes`
+-- Table structure for table `attributes`
 --
 
 CREATE TABLE `Attributes` (
@@ -63,7 +63,7 @@ CREATE TABLE `Attributes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `Attributes`
+-- Dumping data for table `attributes`
 --
 
 INSERT INTO `Attributes` (`id`, `name`, `createdAt`, `updatedAt`) VALUES
@@ -82,7 +82,7 @@ INSERT INTO `Attributes` (`id`, `name`, `createdAt`, `updatedAt`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Categories`
+-- Table structure for table `categories`
 --
 
 CREATE TABLE `Categories` (
@@ -96,7 +96,7 @@ CREATE TABLE `Categories` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `Categories`
+-- Dumping data for table `categories`
 --
 
 INSERT INTO `Categories` (`id`, `name`, `code`, `header`, `slug`, `createdAt`, `updatedAt`) VALUES
@@ -111,7 +111,7 @@ INSERT INTO `Categories` (`id`, `name`, `code`, `header`, `slug`, `createdAt`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Images`
+-- Table structure for table `images`
 --
 
 CREATE TABLE `Images` (
@@ -124,7 +124,7 @@ CREATE TABLE `Images` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `Images`
+-- Dumping data for table `images`
 --
 
 INSERT INTO `Images` (`id`, `postId`, `publicId`, `imageURL`, `createdAt`, `updatedAt`) VALUES
@@ -136,10 +136,10 @@ INSERT INTO `Images` (`id`, `postId`, `publicId`, `imageURL`, `createdAt`, `upda
 -- --------------------------------------------------------
 
 --
--- Table structure for table `PostAttributes`
+-- Table structure for table `postattributes`
 --
 
-CREATE TABLE `PostAttributes` (
+CREATE TABLE `Postattributes` (
   `id` int(11) NOT NULL,
   `postId` int(11) NOT NULL,
   `attributeId` int(11) NOT NULL,
@@ -148,10 +148,10 @@ CREATE TABLE `PostAttributes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `PostAttributes`
+-- Dumping data for table `postattributes`
 --
 
-INSERT INTO `PostAttributes` (`id`, `postId`, `attributeId`, `createdAt`, `updatedAt`) VALUES
+INSERT INTO `Postattributes` (`id`, `postId`, `attributeId`, `createdAt`, `updatedAt`) VALUES
 (108, 38, 23, '2025-08-13 19:52:23', '2025-08-13 19:52:23'),
 (109, 38, 26, '2025-08-13 19:52:23', '2025-08-13 19:52:23'),
 (168, 39, 23, '2025-08-15 06:52:07', '2025-08-15 06:52:07'),
@@ -165,7 +165,7 @@ INSERT INTO `PostAttributes` (`id`, `postId`, `attributeId`, `createdAt`, `updat
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Postpackages`
+-- Table structure for table `postpackages`
 --
 
 CREATE TABLE `Postpackages` (
@@ -178,7 +178,7 @@ CREATE TABLE `Postpackages` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `Postpackages`
+-- Dumping data for table `postpackages`
 --
 
 INSERT INTO `Postpackages` (`id`, `postTypeId`, `timePackageId`, `price`, `createdAt`, `updatedAt`) VALUES
@@ -204,7 +204,7 @@ INSERT INTO `Postpackages` (`id`, `postTypeId`, `timePackageId`, `price`, `creat
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Postpayments`
+-- Table structure for table `postpayments`
 --
 
 CREATE TABLE `Postpayments` (
@@ -224,7 +224,7 @@ CREATE TABLE `Postpayments` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Posts`
+-- Table structure for table `posts`
 --
 
 CREATE TABLE `Posts` (
@@ -243,7 +243,7 @@ CREATE TABLE `Posts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `Posts`
+-- Dumping data for table `posts`
 --
 
 INSERT INTO `Posts` (`id`, `categoryId`, `userId`, `title`, `slug`, `price`, `priceUnit`, `acreage`, `description`, `status`, `createdAt`, `updatedAt`) VALUES
@@ -255,13 +255,13 @@ INSERT INTO `Posts` (`id`, `categoryId`, `userId`, `title`, `slug`, `price`, `pr
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Posttypes`
+-- Table structure for table `posttypes`
 --
 
 CREATE TABLE `Posttypes` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `Postsize` varchar(100) NOT NULL,
+  `postSize` varchar(100) NOT NULL,
   `colorName` varchar(100) NOT NULL,
   `color` varchar(255) NOT NULL,
   `uppercase` tinyint(1) NOT NULL,
@@ -274,10 +274,10 @@ CREATE TABLE `Posttypes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `Posttypes`
+-- Dumping data for table `posttypes`
 --
 
-INSERT INTO `Posttypes` (`id`, `name`, `Postsize`, `colorName`, `color`, `uppercase`, `autoConfirm`, `imageDemo`, `star`, `description`, `createdAt`, `updatedAt`) VALUES
+INSERT INTO `Posttypes` (`id`, `name`, `postSize`, `colorName`, `color`, `uppercase`, `autoConfirm`, `imageDemo`, `star`, `description`, `createdAt`, `updatedAt`) VALUES
 (1, 'Tin miễn phí', 'Nhỏ', 'Màu mặc định', '#055698', 0, 0, 'null', 0, '<p><span style=\"background-color:rgb(255,255,255);color:hsl(207,94%,31%);font-family:system-ui, -apple-system, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, &quot;Noto Sans&quot;, &quot;Liberation Sans&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;;font-size:15.4px;\"><span style=\"-webkit-text-stroke-width:0px;box-sizing:border-box;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:300;letter-spacing:normal;orphans:2;scroll-behavior:auto !important;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;\">Tiêu đề màu mặc định, viết thường</span><span style=\"-webkit-text-stroke-width:0px;display:inline !important;float:none;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:300;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;\">.</span></span><span style=\"background-color:rgb(255,255,255);color:rgb(33,37,41);font-family:system-ui, -apple-system, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, &quot;Noto Sans&quot;, &quot;Liberation Sans&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;;font-size:15.4px;\"><span style=\"-webkit-text-stroke-width:0px;display:inline !important;float:none;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:300;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;\"> Hiển thị sau các tin VIP.</span></span></p>', '2025-02-25 18:23:45', '2025-02-25 21:21:13'),
 (14, 'Tin thường', 'Nhỏ', 'Màu mặc định', '#055698', 0, 0, 'https://res.cloudinary.com/dwqmjrxgz/image/upload/v1737970255/PhongTro123/y9toqnk2aqvz7hs1ki8q.jpg', 0, '<p><span style=\"background-color:rgb(255,255,255);color:hsl(207, 94%, 31%);font-family:system-ui, -apple-system, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, &quot;Noto Sans&quot;, &quot;Liberation Sans&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;;font-size:15.4px;\"><span style=\"-webkit-text-stroke-width:0px;box-sizing:border-box;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:300;letter-spacing:normal;orphans:2;scroll-behavior:auto !important;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;\">Tiêu đề màu mặc định, viết thường</span><span style=\"-webkit-text-stroke-width:0px;display:inline !important;float:none;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:300;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;\">.</span></span><span style=\"background-color:rgb(255,255,255);color:rgb(33,37,41);font-family:system-ui, -apple-system, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, &quot;Noto Sans&quot;, &quot;Liberation Sans&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;;font-size:15.4px;\"><span style=\"-webkit-text-stroke-width:0px;display:inline !important;float:none;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:300;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;\"> Hiển thị sau các tin VIP.</span></span></p>', '2025-01-27 09:30:56', '2025-02-25 21:17:04'),
 (15, 'Tin VIP 3', 'Trung bình', 'Màu xanh', '#3763e0', 1, 1, 'https://res.cloudinary.com/dwqmjrxgz/image/upload/v1737970458/PhongTro123/xlh9ac8kjgi9npacqir3.jpg', 2, '<p><span style=\"background-color:rgb(255,255,255);color:hsl(224, 73%, 55%);font-family:system-ui, -apple-system, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, &quot;Noto Sans&quot;, &quot;Liberation Sans&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;;font-size:15.4px;\"><span style=\"-webkit-text-stroke-width:0px;box-sizing:border-box;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:normal;orphans:2;scroll-behavior:auto !important;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;\"><strong>TIÊU ĐỀ IN HOA MÀU XANH</strong></span><span style=\"-webkit-text-stroke-width:0px;display:inline !important;float:none;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:300;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;\">, </span></span><span style=\"background-color:rgb(255,255,255);color:rgb(33,37,41);font-family:system-ui, -apple-system, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, &quot;Noto Sans&quot;, &quot;Liberation Sans&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;;font-size:15.4px;\"><span style=\"-webkit-text-stroke-width:0px;display:inline !important;float:none;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:300;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;\">gắn biểu tượng 2 ngôi sao màu vàng ở tiêu đề tin đăng. Hiển thị sau tin VIP Nổi Bật, Tin VIP 1, Tin VIP 2 và trên các tin khác.</span></span></p>', '2025-01-27 09:34:19', '2025-01-27 09:39:48'),
@@ -288,7 +288,7 @@ INSERT INTO `Posttypes` (`id`, `name`, `Postsize`, `colorName`, `color`, `upperc
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Reports`
+-- Table structure for table `reports`
 --
 
 CREATE TABLE `Reports` (
@@ -305,7 +305,7 @@ CREATE TABLE `Reports` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Sequelizemeta`
+-- Table structure for table `sequelizemeta`
 --
 
 CREATE TABLE `Sequelizemeta` (
@@ -313,7 +313,7 @@ CREATE TABLE `Sequelizemeta` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `Sequelizemeta`
+-- Dumping data for table `sequelizemeta`
 --
 
 INSERT INTO `Sequelizemeta` (`name`) VALUES
@@ -335,19 +335,19 @@ INSERT INTO `Sequelizemeta` (`name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Timepackages`
+-- Table structure for table `timepackages`
 --
 
 CREATE TABLE `Timepackages` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `dayCount` int(11) NOT NULL,
-  `createdAt` date NOT NULL DEFAULT current_timestamp(),
-  `updatedAt` date NOT NULL DEFAULT current_timestamp()
+  `createdAt` datetime NOT NULL DEFAULT current_timestamp(),
+  `updatedAt` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `Timepackages`
+-- Dumping data for table `timepackages`
 --
 
 INSERT INTO `Timepackages` (`id`, `name`, `dayCount`, `createdAt`, `updatedAt`) VALUES
@@ -358,7 +358,7 @@ INSERT INTO `Timepackages` (`id`, `name`, `dayCount`, `createdAt`, `updatedAt`) 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE `Users` (
@@ -381,7 +381,7 @@ CREATE TABLE `Users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `Users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `Users` (`id`, `name`, `password`, `role`, `phone`, `email`, `zalo`, `fbUrl`, `avatar`, `verified`, `passwordResetExpireDate`, `passwordResetToken`, `otp`, `otpExpireTime`, `createdAt`, `updatedAt`) VALUES
@@ -391,7 +391,7 @@ INSERT INTO `Users` (`id`, `name`, `password`, `role`, `phone`, `email`, `zalo`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Wishlists`
+-- Table structure for table `wishlists`
 --
 
 CREATE TABLE `Wishlists` (
@@ -407,41 +407,41 @@ CREATE TABLE `Wishlists` (
 --
 
 --
--- Indexes for table `Addresses`
+-- Indexes for table `addresses`
 --
 ALTER TABLE `Addresses`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_address_post` (`postId`);
 
 --
--- Indexes for table `Attributes`
+-- Indexes for table `attributes`
 --
 ALTER TABLE `Attributes`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `Categories`
+-- Indexes for table `categories`
 --
 ALTER TABLE `Categories`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `Images`
+-- Indexes for table `images`
 --
 ALTER TABLE `Images`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_image_post` (`postId`);
 
 --
--- Indexes for table `PostAttributes`
+-- Indexes for table `postattributes`
 --
-ALTER TABLE `PostAttributes`
+ALTER TABLE `Postattributes`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_postattribute_attribute` (`attributeId`),
   ADD KEY `fk_postattribute_post` (`postId`);
 
 --
--- Indexes for table `Postpackages`
+-- Indexes for table `postpackages`
 --
 ALTER TABLE `Postpackages`
   ADD PRIMARY KEY (`id`),
@@ -449,7 +449,7 @@ ALTER TABLE `Postpackages`
   ADD KEY `fk_postpackage_timepackage` (`timePackageId`) USING BTREE;
 
 --
--- Indexes for table `Postpayments`
+-- Indexes for table `postpayments`
 --
 ALTER TABLE `Postpayments`
   ADD PRIMARY KEY (`id`),
@@ -458,7 +458,7 @@ ALTER TABLE `Postpayments`
   ADD KEY `fk_postpayment_postpackage` (`postPackageId`);
 
 --
--- Indexes for table `Posts`
+-- Indexes for table `posts`
 --
 ALTER TABLE `Posts`
   ADD PRIMARY KEY (`id`),
@@ -466,39 +466,39 @@ ALTER TABLE `Posts`
   ADD KEY `fk_post_user` (`userId`);
 
 --
--- Indexes for table `Posttypes`
+-- Indexes for table `posttypes`
 --
 ALTER TABLE `Posttypes`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `Reports`
+-- Indexes for table `reports`
 --
 ALTER TABLE `Reports`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_report_post` (`postId`);
 
 --
--- Indexes for table `Sequelizemeta`
+-- Indexes for table `sequelizemeta`
 --
 ALTER TABLE `Sequelizemeta`
   ADD PRIMARY KEY (`name`),
   ADD UNIQUE KEY `name` (`name`);
 
 --
--- Indexes for table `Timepackages`
+-- Indexes for table `timepackages`
 --
 ALTER TABLE `Timepackages`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `Users`
+-- Indexes for table `users`
 --
 ALTER TABLE `Users`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `Wishlists`
+-- Indexes for table `wishlists`
 --
 ALTER TABLE `Wishlists`
   ADD PRIMARY KEY (`id`),
@@ -510,79 +510,79 @@ ALTER TABLE `Wishlists`
 --
 
 --
--- AUTO_INCREMENT for table `Addresses`
+-- AUTO_INCREMENT for table `addresses`
 --
 ALTER TABLE `Addresses`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
--- AUTO_INCREMENT for table `Attributes`
+-- AUTO_INCREMENT for table `attributes`
 --
 ALTER TABLE `Attributes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
--- AUTO_INCREMENT for table `Categories`
+-- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `Categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `Images`
+-- AUTO_INCREMENT for table `images`
 --
 ALTER TABLE `Images`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 
 --
--- AUTO_INCREMENT for table `PostAttributes`
+-- AUTO_INCREMENT for table `postattributes`
 --
-ALTER TABLE `PostAttributes`
+ALTER TABLE `Postattributes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=175;
 
 --
--- AUTO_INCREMENT for table `Postpackages`
+-- AUTO_INCREMENT for table `postpackages`
 --
 ALTER TABLE `Postpackages`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
--- AUTO_INCREMENT for table `Postpayments`
+-- AUTO_INCREMENT for table `postpayments`
 --
 ALTER TABLE `Postpayments`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
 
 --
--- AUTO_INCREMENT for table `Posts`
+-- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `Posts`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
--- AUTO_INCREMENT for table `Posttypes`
+-- AUTO_INCREMENT for table `posttypes`
 --
 ALTER TABLE `Posttypes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
--- AUTO_INCREMENT for table `Reports`
+-- AUTO_INCREMENT for table `reports`
 --
 ALTER TABLE `Reports`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `Timepackages`
+-- AUTO_INCREMENT for table `timepackages`
 --
 ALTER TABLE `Timepackages`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `Users`
+-- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `Users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `Wishlists`
+-- AUTO_INCREMENT for table `wishlists`
 --
 ALTER TABLE `Wishlists`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
@@ -592,57 +592,57 @@ ALTER TABLE `Wishlists`
 --
 
 --
--- Constraints for table `Addresses`
+-- Constraints for table `addresses`
 --
 ALTER TABLE `Addresses`
-  ADD CONSTRAINT `fk_address_post` FOREIGN KEY (`postId`) REFERENCES `Posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_address_post` FOREIGN KEY (`postId`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `Images`
+-- Constraints for table `images`
 --
 ALTER TABLE `Images`
-  ADD CONSTRAINT `fk_image_post` FOREIGN KEY (`postId`) REFERENCES `Posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_image_post` FOREIGN KEY (`postId`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `PostAttributes`
+-- Constraints for table `postattributes`
 --
-ALTER TABLE `PostAttributes`
-  ADD CONSTRAINT `fk_postattribute_attribute` FOREIGN KEY (`attributeId`) REFERENCES `Attributes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_postattribute_post` FOREIGN KEY (`postId`) REFERENCES `Posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `Postattributes`
+  ADD CONSTRAINT `fk_postattribute_attribute` FOREIGN KEY (`attributeId`) REFERENCES `attributes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_postattribute_post` FOREIGN KEY (`postId`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `Postpackages`
+-- Constraints for table `postpackages`
 --
 ALTER TABLE `Postpackages`
-  ADD CONSTRAINT `fk_postpackage_posttype` FOREIGN KEY (`postTypeId`) REFERENCES `Posttypes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_postpackage_timepackage` FOREIGN KEY (`timePackageId`) REFERENCES `Timepackages` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_postpackage_posttype` FOREIGN KEY (`postTypeId`) REFERENCES `posttypes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_postpackage_timepackage` FOREIGN KEY (`timePackageId`) REFERENCES `timepackages` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `Postpayments`
+-- Constraints for table `postpayments`
 --
 ALTER TABLE `Postpayments`
-  ADD CONSTRAINT `fk_postpayment_post` FOREIGN KEY (`postId`) REFERENCES `Posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_postpayment_postpackage` FOREIGN KEY (`postPackageId`) REFERENCES `Postpackages` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_postpayment_post` FOREIGN KEY (`postId`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_postpayment_postpackage` FOREIGN KEY (`postPackageId`) REFERENCES `postpackages` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `Posts`
+-- Constraints for table `posts`
 --
 ALTER TABLE `Posts`
-  ADD CONSTRAINT `fk_post_category` FOREIGN KEY (`categoryId`) REFERENCES `Categories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_post_user` FOREIGN KEY (`userId`) REFERENCES `Users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_post_category` FOREIGN KEY (`categoryId`) REFERENCES `categories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_post_user` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `Reports`
+-- Constraints for table `reports`
 --
 ALTER TABLE `Reports`
-  ADD CONSTRAINT `fk_report_post` FOREIGN KEY (`postId`) REFERENCES `Posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_report_post` FOREIGN KEY (`postId`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `Wishlists`
+-- Constraints for table `wishlists`
 --
 ALTER TABLE `Wishlists`
-  ADD CONSTRAINT `fk_wishlist_post` FOREIGN KEY (`postId`) REFERENCES `Posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_wishlist_user` FOREIGN KEY (`userId`) REFERENCES `Users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_wishlist_post` FOREIGN KEY (`postId`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_wishlist_user` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
