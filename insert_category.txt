@@ -1,0 +1,7 @@
+INSERT INTO categories (name, header, slug, createdAt, updatedAt) VALUES ("Cho thuê phòng trọ", "Cho Thuê Phòng Trọ, Giá Rẻ, Tiện Nghi, Mới Nhất ", "cho-thue-phong-tro",current_timestamp, current_timestamp);
+INSERT INTO categories (name, header, slug, createdAt, updatedAt) VALUES ("Nhà nguyên căn", "Cho Thuê Nhà Nguyên Căn, Giá Rẻ, Chính Chủ, Mới Nhất ", "cho-thue-nha-nguyen-can", current_timestamp, current_timestamp);
+INSERT INTO categories (name, header, slug, createdAt, updatedAt) VALUES ( "Căn hộ chung cư","Cho Thuê Căn Hộ Chung Cư, Giá Rẻ, View Đẹp, Mới Nhất", "cho-thue-can-ho-chung-cu", current_timestamp, current_timestamp);
+INSERT INTO categories (name, header, slug, createdAt, updatedAt) VALUES ( "Căn hộ mini","Cho Thuê Căn Hộ Mini + Chung Cư Mini Giá Rẻ, Mới Nhất", "cho-thue-can-ho-chung-cu-mini", current_timestamp, current_timestamp);
+INSERT INTO categories (name, header, slug, createdAt, updatedAt) VALUES ( "Căn hộ dịch vụ","Cho Thuê Căn Hộ Dịch Vụ, Giá Rẻ, Mới Nhất", "cho-thue-can-ho-dich-vu", current_timestamp, current_timestamp);
+INSERT INTO categories (name, header, slug, createdAt, updatedAt) VALUES ( "Ở ghép","Tìm Người Ở Ghép, Tìm Nam Ở Ghép, Tìm Nữ Ở Ghép, Mới Nhất", "tim-nguoi-o-ghep", current_timestamp, current_timestamp);
+INSERT INTO categories (name, header, slug, createdAt, updatedAt) VALUES ( "Mặt bằng","Cho Thuê Mặt Bằng, Cho Thuê Văn Phòng, Cửa Hàng, Kiot, Mới Nhất", "cho-thue-mat-bang", current_timestamp, current_timestamp);
