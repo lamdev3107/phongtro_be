@@ -317,7 +317,7 @@ CREATE TABLE `Sequelizemeta` (
 --
 
 INSERT INTO `Sequelizemeta` (`name`) VALUES
-('20250218175334-create_Users.js'),
+('20250218175334-create_users.js'),
 ('create-address.js'),
 ('create-attribute.js'),
 ('create-category.js'),
@@ -329,7 +329,7 @@ INSERT INTO `Sequelizemeta` (`name`) VALUES
 ('create-post.js'),
 ('create-report.js'),
 ('create-token.js'),
-('create-Users.js'),
+('create-users.js'),
 ('create-wishlist.js');
 
 -- --------------------------------------------------------
