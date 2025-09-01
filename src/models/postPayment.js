@@ -3,13 +3,7 @@ const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
   class PostPayment extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
       PostPayment.belongsTo(models.Post, { foreignKey: "postId", as: "post" });
       PostPayment.belongsTo(models.PostPackage, {
         foreignKey: "postPackageId",
@@ -24,6 +18,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
+      },
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
       },
       postId: {
         type: DataTypes.INTEGER,

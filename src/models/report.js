@@ -23,11 +23,15 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true,
       },
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
       postId: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      reporter: {
+      name: {
         type: DataTypes.STRING,
         allowNull: false,
       },

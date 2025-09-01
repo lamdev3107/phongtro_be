@@ -3,12 +3,11 @@ import dotenv from "dotenv";
 dotenv.config();
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { v4 } from "uuid";
 import ApiError from "../utils/apiError";
 import otp from "../templates/mail/otp";
 import resetPasswordTemplate from "../templates/mail/resetPassword";
 import { genAccessToken, genRefreshToken } from "../utils/jwt";
-import mailService from "./mailer";
+import mailService from "./mail.service";
 import otpGenerator from "otp-generator";
 import { StatusCodes } from "http-status-codes";
 import crypto from "crypto";
@@ -339,19 +338,13 @@ const requestRefreshToken = async (refreshToken, userId) => {
     //Check xem refresh token có phải của chính user không
     if (refreshTokenFromRedis !== refreshToken) {
       throw new ApiError(
-        StatusCodes.UNAUTHORIZED,
+        StatusCodes.FORBIDDEN,
         "Phiên đăng nhập hết hạn, vui lòng đăng nhập lại"
       );
     }
     //Có được refreshToken rồi thì kiểm tra refreshToken có chính xác hay không,
     //Nếu refreshToken chính xác thì lấy ra payload và tạo ra newAccessToken và newRefreshToken mới
     const decoded = await new Promise((resolve, reject) => {
-      // Tại sao lại trả về decode là undefined?
-      // Lý do có thể là do bạn đang truyền vào chuỗi token và secret cứng (hardcode),
-      // không phải là refreshToken thực tế và secret thực tế của hệ thống.
-      // Ngoài ra, nếu token hoặc secret không đúng, jwt.verify sẽ trả về lỗi và decoded sẽ là undefined.
-      // Để đúng, bạn nên truyền refreshToken và secret từ biến môi trường.
-
       jwt.verify(refreshToken, process.env.JWT_REFRESH_KEY, (err, decoded) => {
         if (err) {
           console.log("Check err", err);
@@ -398,6 +391,38 @@ const requestRefreshToken = async (refreshToken, userId) => {
     throw err;
   }
 };
+
+const changePasswordService = async (userId, data) => {
+  try {
+    const account = await db.User.findOne({
+      where: {
+        id: userId,
+      },
+    });
+    const isPasswordCorrect = await bcrypt.compare(
+      data.oldPassword,
+      account.password
+    );
+    const hashedPassword = hashPassword(data.newPassword);
+    if (!isPasswordCorrect) {
+      throw new ApiError(StatusCodes.BAD_REQUEST, "Old password is incorrect");
+    }
+
+    const updatedAccount = await account.update({ password: hashedPassword });
+    const returnData = {
+      id: updatedAccount.id,
+      name: updatedAccount.name,
+      email: updatedAccount.email,
+      phone: updatedAccount.phone,
+      zalo: updatedAccount.zalo,
+      avatar: updatedAccount.avatar,
+      role: updatedAccount.role,
+    };
+    return returnData;
+  } catch (err) {
+    throw err;
+  }
+};
 export {
   register,
   login,
@@ -407,4 +432,5 @@ export {
   forgotPassword,
   resetPassword,
   requestRefreshToken,
+  changePasswordService,
 };

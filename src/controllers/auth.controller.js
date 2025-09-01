@@ -170,6 +170,25 @@ const resetPassword = async (req, res, next) => {
     next(err);
   }
 };
+
+export const changePassword = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+    const data = req.body;
+    const updatedAccount = await authService.changePasswordService(
+      userId,
+      data
+    );
+    return res.status(200).json({
+      success: true,
+      message: "Change password successfully!",
+      data: updatedAccount,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 export {
   sendOTP,
   logout,

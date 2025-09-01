@@ -1,47 +1,82 @@
 import db from "../models";
 const PayOS = require("@payos/node");
 import dotenv from "dotenv";
-
+import ApiError from "../utils/apiError";
+import { StatusCodes } from "http-status-codes";
+import { PostPaymentStatus, PostStatus, PostType } from "../utils/constants";
+import payos from "../config/payOS.config";
 dotenv.config();
 
-// const payos = new PayOS(
-//   "75f202c4-d636-4931-a17b-660bc312980d",
-//   "db3f2a47-cf50-48c9-8faf-a4dbb9c5033e",
-//   "59e7cd76e0ac690fcf85d63e48ddc2a71042adbb379c04bd45bdd2be62df8315"
-// );
-const payos = new PayOS(
-  process.env.PAYOS_CLIENTID,
-  process.env.PAYOS_APIKEY,
-  process.env.PAYOS_CHECKSUM_KEY
-);
-const createNewPostPayment = async (data) => {
+const createNewPostPayment = async (data, status) => {
   try {
     // Tạo mới giao dịch
-    const { returnUrl, ...postPayment } = data;
-
-    const newPostPayment = await db.PostPayment.create(postPayment);
-    let paymentPayload = {
-      amount: newPostPayment.totalPrice,
-      description: `Thanh toán tin đăng ${newPostPayment.postId}`,
-      orderCode: newPostPayment.id,
-      returnUrl:
-        process.env.CLIENT_URL +
-        "/quan-ly/tin-dang/danh-sach-bai-dang?postStatus=active",
-      cancelUrl: returnUrl,
-    };
-
-    const paymentLink = await payos.createPaymentLink(paymentPayload);
-
-    if (paymentLink) {
-      return {
-        success: true,
-        message: "Tạo link thanh toán thành công!",
-        data: newPostPayment.toJSON(),
-        checkoutUrl: paymentLink.checkoutUrl,
-      };
-    } else {
-      throw new Error("Create payment link faiied");
+    let newPostPayment = null;
+    const postPackage = await db.PostPackage.findByPk(data.postPackageId, {
+      include: [
+        {
+          model: db.PostType,
+          as: "postType",
+          attributes: ["id", "name"],
+        },
+      ],
+    });
+    if (!postPackage) {
+      throw new ApiError("Gói tin đăng không tồn tại", StatusCodes.NOT_FOUND);
     }
+    // if (postPackage.postType.name !== PostType.TIN_MIEN_PHI) {
+    //   newPostPayment = await db.PostPayment.create({
+    //     ...data,
+    //     status: PostPaymentStatus.PAID,
+    //   });
+
+    //   await db.Post.update(
+    //     {
+    //       status: PostStatus.ACTIVE,
+    //     },
+    //     {
+    //       where: {
+    //         id: data.postId,
+    //       },
+    //     }
+    //   );
+    //   return newPostPayment;
+    // }
+    newPostPayment = await db.PostPayment.create({
+      ...data,
+      status: PostPaymentStatus.PAID,
+    });
+    await db.Post.update(
+      {
+        status: PostStatus.ACTIVE,
+      },
+      {
+        where: {
+          id: data.postId,
+        },
+      }
+    );
+    return newPostPayment;
+  } catch (err) {
+    throw err;
+  }
+};
+
+const getPostPaymentOfPost = async (postId) => {
+  try {
+    const postPayment = await db.PostPayment.findOne({
+      where: { postId },
+      include: [
+        {
+          model: db.PostPackage,
+          as: "postPackage",
+        },
+        {
+          model: db.TimePackage,
+          as: "timePackage",
+        },
+      ],
+    });
+    return postPayment;
   } catch (err) {
     throw err;
   }
@@ -88,11 +123,11 @@ const completePostPaymentService = async (postPaymentId) => {
       throw new Error("khoản thanh toán tin đăng không tồn tại!");
     }
     await db.PostPayment.update(
-      { status: "paid" },
+      { status: PostPaymentStatus.PAID },
       { where: { id: postPaymentId }, transaction }
     );
     await db.Post.update(
-      { status: "active" },
+      { status: PostStatus.ACTIVE },
       { where: { id: postPayment.postId }, transaction }
     );
 
@@ -108,9 +143,20 @@ const completePostPaymentService = async (postPaymentId) => {
   }
 };
 
+const createPaymentLink = async (data) => {
+  try {
+    const paymentLink = await payos.createPaymentLink(data);
+    return paymentLink;
+  } catch (err) {
+    throw new ApiError(err.message, StatusCodes.INTERNAL_SERVER_ERROR);
+  }
+};
+
 export {
   createNewPostPayment,
   getPaymentLinkInfo,
   deletePostPaymentService,
   completePostPaymentService,
+  getPostPaymentOfPost,
+  createPaymentLink,
 };

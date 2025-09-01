@@ -1,19 +1,16 @@
+import { StatusCodes } from "http-status-codes";
 import db from "../models";
 
 const createNewPostPackageService = async (data) => {
   try {
     const newPostPackage = await db.PostPackage.create(data);
-    return {
-      success: true,
-      message: "Thêm mới gói tin thành công!",
-      data: newPostPackage,
-    };
+    return newPostPackage;
   } catch (err) {
     throw err;
   }
 };
 
-const getPostPackagesService = async (timePackageId = null) => {
+const getPostPackageByTimePackageId = async (timePackageId = null) => {
   try {
     let whereClause = {};
     if (timePackageId) {
@@ -48,11 +45,7 @@ const getPostPackagesService = async (timePackageId = null) => {
       where: whereClause,
     });
 
-    return {
-      success: true,
-      message: "Lấy danh sách gói tin thành công!",
-      data: postPackages,
-    };
+    return postPackages;
   } catch (err) {
     throw err;
   }
@@ -61,14 +54,43 @@ const deletePostPackageService = async (id) => {
   try {
     const postPackage = await db.PostPackage.findByPk(id);
     if (!postPackage) {
-      throw new Error("Gói tin không tồn tại!");
+      throw new ApiError("Gói tin không tồn tại!", StatusCodes.NOT_FOUND);
     }
     await postPackage.destroy();
-    return {
-      success: true,
-      message: "Xóa gói tin thành công!",
-      data: null,
-    };
+    return null;
+  } catch (err) {
+    throw err;
+  }
+};
+
+const getPostPackageByIdService = async (id) => {
+  try {
+    const postPackage = await db.PostPackage.findByPk(id, {
+      include: [
+        {
+          model: db.TimePackage,
+          as: "timePackage",
+          attributes: ["name", "dayCount"],
+        },
+        {
+          model: db.PostType,
+          as: "postType",
+          attributes: [
+            "name",
+            "postSize",
+            "color",
+            "colorName",
+            "uppercase",
+            "autoConfirm",
+            "star",
+            "imageDemo",
+            "description",
+          ],
+        },
+      ],
+      // attributes: ["id", "price", "timePackageId", "postTypeId"],
+    });
+    return postPackage;
   } catch (err) {
     throw err;
   }
@@ -91,11 +113,7 @@ const updatePostPackageService = async (id, payload) => {
     });
     // 4. Commit Transaction nếu tất cả thành công
     await transaction.commit();
-    return {
-      success: true,
-      message: "Cập nhật gói tin thành công!",
-      data: updatedPostPackage,
-    };
+    return updatedPostPackage;
   } catch (err) {
     await transaction.rollback();
     throw err;
@@ -131,19 +149,16 @@ const getPostPackageGroupService = async () => {
       // raw: true,
       order: [["id", "DESC"]], // Đảm bảo thứ tự sắp xếp theo id
     });
-    return {
-      success: true,
-      message: "Lấy danh sách gói tin thành công!",
-      data: postPackages,
-    };
+    return postPackages;
   } catch (err) {
     throw err;
   }
 };
 export {
   createNewPostPackageService,
-  getPostPackagesService,
+  getPostPackageByTimePackageId,
   deletePostPackageService,
   updatePostPackageService,
   getPostPackageGroupService,
+  getPostPackageByIdService,
 };

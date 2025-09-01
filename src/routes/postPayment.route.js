@@ -5,7 +5,7 @@ import { verifyAccessToken } from "../middlewares/auth.middleware";
 const router = express.Router();
 router.post("/", verifyAccessToken, postPaymentController.createNewPostPayment);
 router.get(
-  "/payment-link-info/:orderId",
+  "/payment-link-info",
   verifyAccessToken,
   postPaymentController.getPaymentLinkInfo
 );

@@ -1,19 +1,21 @@
 import { StatusCodes } from "http-status-codes";
-import { convertFormData } from "../utils/common";
 import {
   createNewPostPackageService,
   deletePostPackageService,
   getPostPackageGroupService,
-  getPostPackagesService,
+  getPostPackageByTimePackageId,
   updatePostPackageService,
 } from "../services/postPackage.service";
-import { updatePostTypeService } from "../services/postType.service";
 
 const createNewPostPackage = async (req, res, next) => {
   try {
     const payload = req.body;
-    const response = await createNewPostPackageService(payload);
-    return res.status(StatusCodes.CREATED).json(response);
+    const newPostPackage = await createNewPostPackageService(payload);
+    return res.status(StatusCodes.CREATED).json({
+      success: true,
+      message: "Thêm mới gói tin thành công!",
+      data: newPostPackage,
+    });
   } catch (err) {
     next(err);
   }
@@ -22,17 +24,24 @@ const createNewPostPackage = async (req, res, next) => {
 const getPostPackages = async (req, res, next) => {
   try {
     const timePackageId = req.query?.timepackageid;
-    const response = await getPostPackagesService(timePackageId);
-    return res.status(StatusCodes.OK).json(response);
+    const postPackages = await getPostPackageByTimePackageId(timePackageId);
+    return res.status(StatusCodes.OK).json({
+      success: true,
+      message: "Lấy danh sách gói tin thành công!",
+      data: postPackages,
+    });
   } catch (err) {
     next(err);
   }
 };
 const getPostPackageGroup = async (req, res, next) => {
   try {
-    const response = await getPostPackageGroupService();
-
-    return res.status(StatusCodes.OK).json(response);
+    const postPackageGroup = await getPostPackageGroupService();
+    return res.status(StatusCodes.OK).json({
+      success: true,
+      message: "Lấy danh sách gói tin thành công!",
+      data: postPackageGroup,
+    });
   } catch (err) {
     next(err);
   }
@@ -43,8 +52,12 @@ const updatePostPackage = async (req, res, next) => {
     let payload = req.body;
 
     // payload = convertFormData(payload);
-    const response = await updatePostPackageService(id, payload);
-    return res.status(StatusCodes.OK).json(response);
+    const updatedPostPackage = await updatePostPackageService(id, payload);
+    return res.status(StatusCodes.OK).json({
+      success: true,
+      message: "Cập nhật gói tin thành công!",
+      data: updatedPostPackage,
+    });
   } catch (err) {
     next(err);
   }
@@ -52,8 +65,12 @@ const updatePostPackage = async (req, res, next) => {
 const deletePostPackage = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const response = await deletePostPackageService(id);
-    return res.status(StatusCodes.OK).json(response);
+    const deletedPostPackage = await deletePostPackageService(id);
+    return res.status(StatusCodes.OK).json({
+      success: true,
+      message: "Xóa gói tin thành công!",
+      data: deletedPostPackage,
+    });
   } catch (err) {
     next(err);
   }

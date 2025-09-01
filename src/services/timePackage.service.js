@@ -3,11 +3,7 @@ import db from "../models";
 const createNewTimePackageService = async (data) => {
   try {
     const newTimePackage = await db.TimePackage.create(data);
-    return {
-      success: true,
-      message: "Thêm mới gói thời gian thành công!",
-      data: newTimePackage,
-    };
+    return newTimePackage;
   } catch (err) {
     throw err;
   }

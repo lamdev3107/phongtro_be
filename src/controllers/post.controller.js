@@ -29,8 +29,12 @@ const createNewPost = async (req, res, next) => {
       attributes: attributes,
       images: images,
     };
-    const response = await postService.createNewPostService(data);
-    return res.status(200).json(response);
+    const newPost = await postService.createNewPostService(data);
+    return res.status(200).json({
+      success: true,
+      message: "Create new post successfully!",
+      data: newPost,
+    });
   } catch (error) {
     next(error);
   }
@@ -88,8 +92,26 @@ export const getPostsLimit = async (req, res) => {
 const getPost = async (req, res, next) => {
   const { id } = req.params;
   try {
-    const response = await postService.getPostService(id);
-    return res.status(200).json(response);
+    const data = await postService.getPostService(id);
+    return res.status(200).json({
+      success: true,
+      message: "Get detail post successfully",
+      data: data,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const getPostPaymentOfPost = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const postPayment = await postPaymentService.getPostPaymentOfPost(id);
+    return res.status(200).json({
+      success: true,
+      message: "Get post payment of post successfully",
+      data: postPayment,
+    });
   } catch (err) {
     next(err);
   }
@@ -127,4 +149,4 @@ export const getNewPosts = async (req, res) => {
   }
 };
 
-export { createNewPost, getPost, updatePost, getPosts };
+export { createNewPost, getPost, updatePost, getPosts, getPostPaymentOfPost };

@@ -43,6 +43,7 @@ const initRoutes = (app) => {
   app.use("/api/v1/post-payments", postPaymentRouter);
   app.use("/api/v1/me", meRouter);
   app.use("/api/v1/payment", paymentRouter);
+  app.use("/api/v1/address", wishlistRouter);
 
   //Error handling
   app.use(errorHandlingMiddleware);

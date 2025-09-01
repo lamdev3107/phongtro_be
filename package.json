@@ -2,9 +2,9 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "src/server.js",
   "scripts": {
-    "start": "nodemon --exec babel-node server.js",
+    "start": "nodemon --exec babel-node src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -12,9 +12,9 @@
   "license": "ISC",
   "dependencies": {
     "@payos/node": "^1.0.10",
-    "axios": "^1.7.9",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.3",
+    "bullmq": "^5.58.1",
     "cloudinary": "^1.21.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",

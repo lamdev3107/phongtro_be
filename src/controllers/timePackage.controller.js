@@ -8,8 +8,12 @@ import {
 const createNewTimePackage = async (req, res, next) => {
   try {
     const payload = req.body;
-    const response = await createNewTimePackageService(payload);
-    return res.status(StatusCodes.CREATED).json(response);
+    const newTimePackage = await createNewTimePackageService(payload);
+    return res.status(StatusCodes.CREATED).json({
+      success: true,
+      message: "Thêm mới gói thời gian thành công!",
+      data: newTimePackage,
+    });
   } catch (err) {
     next(err);
   }

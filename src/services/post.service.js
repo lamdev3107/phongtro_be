@@ -2,12 +2,12 @@ import cloudinary from "../config/cloudinary.config";
 import db, { sequelize } from "../models";
 import { createSlug } from "../utils/common";
 import { PostStatus } from "../utils/constants";
-const { Op, Sequelize } = require("sequelize");
 
 export const getPostService = async (id) => {
   try {
-    const posts = await db.Post.findByPk(id, {
+    const post = await db.Post.findByPk(id, {
       attributes: [
+        "id",
         "title",
         "slug",
         "price",
@@ -26,209 +26,76 @@ export const getPostService = async (id) => {
         {
           model: db.Image,
           as: "images",
-          attributes: ["imageURL", "id", "publicId"],
+          attributes: ["imageURL"],
         },
         {
           model: db.Address,
           as: "address",
+          attributes: ["addressString", "province", "district", "ward"],
         },
         {
           model: db.Attribute,
           as: "attributes",
+          attributes: ["id", "name"],
         },
         {
           model: db.User,
           as: "user",
-          attributes: ["name", "zalo", "phone"],
+          attributes: [
+            "id",
+            "name",
+            "zalo",
+            "phone",
+            "email",
+            "avatar",
+            "createdAt",
+          ],
         },
+      ],
+    });
+
+    const postPayment = await db.PostPayment.findOne({
+      where: { postId: post.id },
+      include: [
         {
-          model: db.PostPayment,
-          as: "payment",
+          model: db.PostPackage,
+          as: "postPackage",
           include: [
             {
-              model: db.PostPackage,
-              as: "postPackage",
-              attributes: [],
-              include: [
-                {
-                  model: db.TimePackage,
-                  as: "timePackage",
-                },
-                {
-                  model: db.PostType,
-                  as: "postType",
-                },
+              model: db.TimePackage,
+              as: "timePackage",
+              attributes: ["name", "dayCount"],
+            },
+            {
+              model: db.PostType,
+              as: "postType",
+              attributes: [
+                "name",
+                "postSize",
+                "color",
+                "colorName",
+                "uppercase",
+                "autoConfirm",
+                "star",
               ],
             },
           ],
         },
       ],
     });
-    return {
-      success: true,
-      message: "Get post successfully!",
-      data: posts,
-    };
+
+    // Lấy ra số lượng postPayment của user
+    const postPaymentCount = await db.PostPayment.count({
+      where: { userId: post.user.id },
+    });
+    post.user.dataValues.postCount = postPaymentCount;
+    post.dataValues.payment = postPayment;
+    return post;
   } catch (err) {
     throw err;
   }
 };
 
-// const getPostsService = async (orderBy, order, page, limit) => {
-//   try {
-//     // Kiểm tra orderBy hợp lệ
-//     const allowedFields = ["createdAt", "postType"];
-//     const allowedOrders = ["asc", "desc"];
-//     const orderField = allowedFields.includes(orderBy) ? orderBy : "createdAt";
-//     const orderDirection = allowedOrders.includes(order.toLowerCase())
-//       ? order.toLowerCase()
-//       : "desc";
-
-//     let whereClause = {};
-
-//     const offset = (page - 1) * limit;
-//     // let { rows: posts, count } = await db.Post.findAndCountAll({
-//     //   raw: true,
-//     //   nest: true,
-//     //   attributes: [
-//     //     "id",
-//     //     "title",
-//     //     "slug",
-//     //     "price",
-//     //     "priceUnit",
-//     //     "status",
-//     //     "acreage",
-//     //     "description",
-//     //     "createdAt",
-//     //     "updatedAt",
-//     //   ],
-//     //   where: whereClause,
-//     //   include: [
-//     //     {
-//     //       model: db.Category,
-//     //       as: "category",
-//     //       attributes: ["name"],
-//     //     },
-//     //     {
-//     //       model: db.Image,
-//     //       as: "images",
-//     //       attributes: ["imageURL"],
-//     //     },
-//     //     {
-//     //       model: db.Address,
-//     //       as: "address",
-//     //       attributes: ["addressString", "province", "district", "ward"],
-//     //     },
-//     //     {
-//     //       model: db.User,
-//     //       as: "user",
-//     //       attributes: ["name", "zalo", "phone"],
-//     //     },
-//     //     {
-//     //       model: db.PostPayment,
-//     //       as: "payment",
-//     //       required: false, // false => LEFT JOIN
-//     //       include: [
-//     //         {
-//     //           model: db.PostPackage,
-//     //           as: "postPackage",
-//     //           attributes: [],
-//     //           include: [
-//     //             {
-//     //               model: db.TimePackage,
-//     //               as: "timePackage",
-//     //             },
-//     //             {
-//     //               model: db.PostType,
-//     //               as: "postType",
-//     //             },
-//     //           ],
-//     //         },
-//     //       ],
-//     //     },
-//     //   ],
-//     //   limit: parseInt(limit),
-//     //   offset: parseInt(offset),
-//     //   // logging: console.log, // Log SQL để debug
-//     // });
-//     let { rows: posts, count } = await db.Post.findAndCountAll({
-//       nest: true,
-//       raw: true,
-//       attributes: [
-//         "id",
-//         "title",
-//         "slug",
-//         "price",
-//         "priceUnit",
-//         "status",
-//         "acreage",
-//         "description",
-//         "createdAt",
-//         "updatedAt",
-//       ],
-//       where: whereClause,
-//       include: [
-//         {
-//           model: db.Category,
-//           as: "category",
-//           attributes: ["name"],
-//         },
-//         {
-//           model: db.Image,
-//           as: "images",
-//           attributes: ["imageURL"],
-//         },
-//         {
-//           model: db.Address,
-//           as: "address",
-//         },
-//         {
-//           model: db.User,
-//           as: "user",
-//           attributes: ["name", "zalo", "phone"],
-//         },
-//         {
-//           model: db.PostPayment,
-//           as: "payment",
-//           required: false, // false => LEFT JOIN
-//           include: [
-//             {
-//               model: db.PostPackage,
-//               as: "postPackage",
-//               attributes: [],
-//               include: [
-//                 {
-//                   model: db.TimePackage,
-//                   as: "timePackage",
-//                 },
-//                 {
-//                   model: db.PostType,
-//                   as: "postType",
-//                 },
-//               ],
-//             },
-//           ],
-//         },
-//       ],
-//       group: ["Post.id"], // Nhóm theo ID của Post để tránh nhân bản do JOIN
-//       subQuery: false, // Tránh nhân bản bản ghi khi JOIN với bảng con
-//       order: [[orderField, orderDirection]],
-//       limit: parseInt(limit),
-//       offset: parseInt(offset),
-//     });
-//     console.log("chec", posts);
-//     return {
-//       data: posts,
-//       pagination: {
-//         currentPage: parseInt(page),
-//         totalPages: Math.ceil(count / limit),
-//         totalRecords: count,
-//       },
-//     };
-//   } catch (error) {
-//     throw error;
-//   }
-// };
 const getPostsService = async (
   orderBy = "createdAt",
   order = "desc",
@@ -327,7 +194,6 @@ const getPostsService = async (
 
 const createNewPostService = async (data) => {
   const transaction = await db.sequelize.transaction();
-  console.log("Check data", data);
 
   try {
     // 1. Tạo Post
@@ -350,7 +216,7 @@ const createNewPostService = async (data) => {
     );
 
     // 2. Tạo Address
-    const address = await db.Address.create(
+    await db.Address.create(
       {
         postId: createdPost.id,
         ...data.address,
@@ -362,12 +228,13 @@ const createNewPostService = async (data) => {
     );
 
     // 3. Tạo AttributesPost
-    const attributes = data.attributes.map((attributeId) => ({
-      attributeId,
-      postId: createdPost.id,
-    }));
-
-    await db.PostAttribute.bulkCreate(attributes, { transaction });
+    if (data.attributes) {
+      const attributes = data.attributes.map((attributeId) => ({
+        attributeId,
+        postId: createdPost.id,
+      }));
+      await db.PostAttribute.bulkCreate(attributes, { transaction });
+    }
 
     // 4. Tạo Images
     const images = data.images.map((image) => ({
@@ -420,11 +287,7 @@ const createNewPostService = async (data) => {
       ],
     });
 
-    return {
-      success: true,
-      message: "Create new post successfully!",
-      data: post,
-    };
+    return post;
   } catch (error) {
     // ✅ Chỉ rollback nếu transaction chưa kết thúc
     if (!transaction.finished) {
@@ -437,8 +300,6 @@ const createNewPostService = async (data) => {
 const updatePostService = async (id, data) => {
   const transaction = await db.sequelize.transaction();
   try {
-    console.log("Check data", data);
-
     const post = await db.Post.findByPk(id, { transaction });
     if (!post) {
       throw new Error("Post not found!");
@@ -464,7 +325,7 @@ const updatePostService = async (id, data) => {
     );
     await address.update(data.address, { transaction });
     await db.PostAttribute.destroy({ where: { postId: id } }, { transaction });
-    if (data.attribute !== "") {
+    if (data.attributes) {
       const attributes = data.attributes.map((attributeId) => ({
         attributeId: attributeId,
         postId: post.id,
@@ -501,4 +362,29 @@ const updatePostService = async (id, data) => {
     throw err;
   }
 };
-export { createNewPostService, updatePostService, getPostsService };
+
+const checkExpiredPostService = async (postId, userEmail, postPaymentId) => {
+  try {
+    const postPayment = await db.PostPayment.findByPk(postPaymentId);
+    if (!postPayment) {
+      throw new Error("Post payment not found!");
+    }
+    if (postPayment.expiredDate < new Date()) {
+      await db.Post.update({ status: "expired" }, { where: { id: postId } });
+    }
+    mailService.sendEmail({
+      to: userEmail,
+      subject: "Tin đăng của bạn đã hết hạn",
+      html: expiredPostMailTemplate(postId),
+    });
+  } catch (err) {
+    throw err;
+  }
+};
+
+export {
+  createNewPostService,
+  updatePostService,
+  getPostsService,
+  checkExpiredPostService,
+};
