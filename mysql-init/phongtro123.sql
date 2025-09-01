@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 22, 2025 at 09:48 AM
+-- Generation Time: Aug 22, 2025 at 12:14 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -27,7 +27,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `addresses`
 --
 
-CREATE TABLE `addresses` (
+CREATE TABLE `Addresses` (
   `id` int(11) NOT NULL,
   `postId` int(11) NOT NULL,
   `province` int(11) DEFAULT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE `addresses` (
 -- Dumping data for table `addresses`
 --
 
-INSERT INTO `addresses` (`id`, `postId`, `province`, `district`, `ward`, `address`, `addressString`, `createdAt`, `updatedAt`) VALUES
+INSERT INTO `Addresses` (`id`, `postId`, `province`, `district`, `ward`, `address`, `addressString`, `createdAt`, `updatedAt`) VALUES
 (43, 38, 89, 886, 30341, '', 'Thị Trấn Long Bình,Huyện An Phú,Tỉnh An Giang', '2025-08-13 19:52:23', '2025-08-15 06:59:12'),
 (44, 39, 89, 886, 30337, '\"48 Ngõ 13, Khuất Duy Tiến\"', '48 Ngõ 13, Khuất Duy Tiến, Thị trấn An Phú,Huyện An Phú,Tỉnh An Giang', '2025-08-13 19:59:32', '2025-08-13 19:59:32'),
 (45, 40, 89, 886, 30341, '\"\"', 'Thị Trấn Long Bình,Huyện An Phú,Tỉnh An Giang', '2025-08-15 03:53:25', '2025-08-15 03:53:25'),
@@ -55,7 +55,7 @@ INSERT INTO `addresses` (`id`, `postId`, `province`, `district`, `ward`, `addres
 -- Table structure for table `attributes`
 --
 
-CREATE TABLE `attributes` (
+CREATE TABLE `Attributes` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -66,7 +66,7 @@ CREATE TABLE `attributes` (
 -- Dumping data for table `attributes`
 --
 
-INSERT INTO `attributes` (`id`, `name`, `createdAt`, `updatedAt`) VALUES
+INSERT INTO `Attributes` (`id`, `name`, `createdAt`, `updatedAt`) VALUES
 (23, 'Đầy đủ nội thất', '2025-01-18 05:43:20', '2025-01-18 05:43:20'),
 (24, 'Có máy lạnh', '2025-01-18 05:43:20', '2025-01-18 05:43:20'),
 (25, 'Có thang máy', '2025-01-18 05:43:20', '2025-01-18 05:43:20'),
@@ -85,7 +85,7 @@ INSERT INTO `attributes` (`id`, `name`, `createdAt`, `updatedAt`) VALUES
 -- Table structure for table `categories`
 --
 
-CREATE TABLE `categories` (
+CREATE TABLE `Categories` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `code` varchar(10) NOT NULL,
@@ -99,7 +99,7 @@ CREATE TABLE `categories` (
 -- Dumping data for table `categories`
 --
 
-INSERT INTO `categories` (`id`, `name`, `code`, `header`, `slug`, `createdAt`, `updatedAt`) VALUES
+INSERT INTO `Categories` (`id`, `name`, `code`, `header`, `slug`, `createdAt`, `updatedAt`) VALUES
 (1, 'Phòng trọ', 'PT', 'Cho Thuê Phòng Trọ, Giá Rẻ, Tiện Nghi, Mới Nhất ', 'cho-thue-phong-tro', '2025-01-15 11:42:36', '2025-01-15 11:42:36'),
 (2, 'Nhà nguyên căn', 'NNC', 'Cho Thuê Nhà Nguyên Căn, Giá Rẻ, Chính Chủ, Mới Nhất ', 'cho-thue-nha-nguyen-can', '2025-01-15 11:42:36', '2025-01-15 11:42:36'),
 (3, 'Căn hộ chung cư', 'CHCC', 'Cho Thuê Căn Hộ Chung Cư, Giá Rẻ, View Đẹp, Mới Nhất', 'cho-thue-can-ho-chung-cu', '2025-01-15 11:42:36', '2025-01-15 11:42:36'),
@@ -114,20 +114,20 @@ INSERT INTO `categories` (`id`, `name`, `code`, `header`, `slug`, `createdAt`, `
 -- Table structure for table `images`
 --
 
-CREATE TABLE `images` (
+CREATE TABLE `Images` (
   `id` int(11) NOT NULL,
   `postId` int(11) NOT NULL,
   `publicId` varchar(255) NOT NULL,
   `imageURL` text NOT NULL,
-  `createdAt` date NOT NULL DEFAULT current_timestamp(),
-  `updatedAt` date NOT NULL DEFAULT current_timestamp()
+  `createdAt` datetime NOT NULL DEFAULT current_timestamp(),
+  `updatedAt` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `images`
 --
 
-INSERT INTO `images` (`id`, `postId`, `publicId`, `imageURL`, `createdAt`, `updatedAt`) VALUES
+INSERT INTO `Images` (`id`, `postId`, `publicId`, `imageURL`, `createdAt`, `updatedAt`) VALUES
 (64, 38, 'PhongTro123/pacfpi8i4fzhjchy2c8y', 'https://res.cloudinary.com/dwqmjrxgz/image/upload/v1755114741/PhongTro123/pacfpi8i4fzhjchy2c8y.png', '2025-08-13', '2025-08-13'),
 (65, 38, 'PhongTro123/clyyngwmmsi7h1ffqqka', 'https://res.cloudinary.com/dwqmjrxgz/image/upload/v1755114741/PhongTro123/clyyngwmmsi7h1ffqqka.png', '2025-08-13', '2025-08-13'),
 (88, 39, 'PhongTro123/cowumkgoqmhvk8ebhowf', 'https://res.cloudinary.com/dwqmjrxgz/image/upload/v1755240727/PhongTro123/cowumkgoqmhvk8ebhowf.jpg', '2025-08-15', '2025-08-15'),
@@ -139,7 +139,7 @@ INSERT INTO `images` (`id`, `postId`, `publicId`, `imageURL`, `createdAt`, `upda
 -- Table structure for table `postattributes`
 --
 
-CREATE TABLE `postattributes` (
+CREATE TABLE `Postattributes` (
   `id` int(11) NOT NULL,
   `postId` int(11) NOT NULL,
   `attributeId` int(11) NOT NULL,
@@ -151,7 +151,7 @@ CREATE TABLE `postattributes` (
 -- Dumping data for table `postattributes`
 --
 
-INSERT INTO `postattributes` (`id`, `postId`, `attributeId`, `createdAt`, `updatedAt`) VALUES
+INSERT INTO `Postattributes` (`id`, `postId`, `attributeId`, `createdAt`, `updatedAt`) VALUES
 (108, 38, 23, '2025-08-13 19:52:23', '2025-08-13 19:52:23'),
 (109, 38, 26, '2025-08-13 19:52:23', '2025-08-13 19:52:23'),
 (168, 39, 23, '2025-08-15 06:52:07', '2025-08-15 06:52:07'),
@@ -168,7 +168,7 @@ INSERT INTO `postattributes` (`id`, `postId`, `attributeId`, `createdAt`, `updat
 -- Table structure for table `postpackages`
 --
 
-CREATE TABLE `postpackages` (
+CREATE TABLE `Postpackages` (
   `id` int(11) NOT NULL,
   `postTypeId` int(11) NOT NULL,
   `timePackageId` int(11) NOT NULL,
@@ -181,7 +181,7 @@ CREATE TABLE `postpackages` (
 -- Dumping data for table `postpackages`
 --
 
-INSERT INTO `postpackages` (`id`, `postTypeId`, `timePackageId`, `price`, `createdAt`, `updatedAt`) VALUES
+INSERT INTO `Postpackages` (`id`, `postTypeId`, `timePackageId`, `price`, `createdAt`, `updatedAt`) VALUES
 (7, 1, 1, 0, '2025-02-25 18:27:12', '2025-02-25 18:27:12'),
 (8, 1, 2, 0, '2025-02-25 20:51:28', '2025-02-25 20:51:28'),
 (9, 1, 3, 0, '2025-02-25 20:51:50', '2025-02-25 20:51:50'),
@@ -207,7 +207,7 @@ INSERT INTO `postpackages` (`id`, `postTypeId`, `timePackageId`, `price`, `creat
 -- Table structure for table `postpayments`
 --
 
-CREATE TABLE `postpayments` (
+CREATE TABLE `Postpayments` (
   `id` int(11) NOT NULL,
   `postId` int(11) NOT NULL,
   `postPackageId` int(11) DEFAULT NULL,
@@ -227,7 +227,7 @@ CREATE TABLE `postpayments` (
 -- Table structure for table `posts`
 --
 
-CREATE TABLE `posts` (
+CREATE TABLE `Posts` (
   `id` int(11) NOT NULL,
   `categoryId` int(11) NOT NULL,
   `userId` int(11) NOT NULL,
@@ -246,7 +246,7 @@ CREATE TABLE `posts` (
 -- Dumping data for table `posts`
 --
 
-INSERT INTO `posts` (`id`, `categoryId`, `userId`, `title`, `slug`, `price`, `priceUnit`, `acreage`, `description`, `status`, `createdAt`, `updatedAt`) VALUES
+INSERT INTO `Posts` (`id`, `categoryId`, `userId`, `title`, `slug`, `price`, `priceUnit`, `acreage`, `description`, `status`, `createdAt`, `updatedAt`) VALUES
 (38, 1, 2, 'Địa chỉ: Thị Trấn Long Bình,Huyện An Phú,Tỉnh An Giang', 'dia-chi-thi-tran-long-binhhuyen-an-phutinh-an-giang', 10000, 'đồng/tháng', 1, '<p><span style=\"background-color: rgb(255, 255, 255); color: oklch(0.145 0 0);\">Địa chỉ:Thị Trấn Long Bình,Huyện An Phú,Tỉnh An Giang</span></p>', 'unpaid', '2025-08-13 19:52:23', '2025-08-13 19:52:23'),
 (39, 2, 2, '48 Ngõ 13, Khuất Duy Tiến, Thị trấn An Phú,Huyện An Phú,Tỉnh An Giang', '48-ngo-13-khuat-duy-tien-thi-tran-an-phuhuyen-an-phutinh-an-giang', 1000000, 'đồng/tháng', 46, '<p><span style=\"background-color: rgb(255, 255, 255); color: oklch(0.145 0 0);\">48 Ngõ 13, Khuất Duy Tiến, Thị trấn An Phú,Huyện An Phú,Tỉnh An Giang</span></p>', 'unpaid', '2025-08-13 19:59:32', '2025-08-15 06:52:07'),
 (40, 1, 2, 'Địa chỉ: Thị Trấn Long Bình,Huyện An Phú,Tỉnh An Giang', 'dia-chi-thi-tran-long-binhhuyen-an-phutinh-an-giang', 10000, 'đồng/tháng', 1, '<p><span style=\"color: oklch(0.145 0 0); background-color: rgb(255, 255, 255);\">Địa chỉ:Thị Trấn Long Bình,Huyện An Phú,Tỉnh An Giang</span></p>', 'unpaid', '2025-08-15 03:53:25', '2025-08-15 06:59:12'),
@@ -258,7 +258,7 @@ INSERT INTO `posts` (`id`, `categoryId`, `userId`, `title`, `slug`, `price`, `pr
 -- Table structure for table `posttypes`
 --
 
-CREATE TABLE `posttypes` (
+CREATE TABLE `Posttypes` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `postSize` varchar(100) NOT NULL,
@@ -277,7 +277,7 @@ CREATE TABLE `posttypes` (
 -- Dumping data for table `posttypes`
 --
 
-INSERT INTO `posttypes` (`id`, `name`, `postSize`, `colorName`, `color`, `uppercase`, `autoConfirm`, `imageDemo`, `star`, `description`, `createdAt`, `updatedAt`) VALUES
+INSERT INTO `Posttypes` (`id`, `name`, `postSize`, `colorName`, `color`, `uppercase`, `autoConfirm`, `imageDemo`, `star`, `description`, `createdAt`, `updatedAt`) VALUES
 (1, 'Tin miễn phí', 'Nhỏ', 'Màu mặc định', '#055698', 0, 0, 'null', 0, '<p><span style=\"background-color:rgb(255,255,255);color:hsl(207,94%,31%);font-family:system-ui, -apple-system, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, &quot;Noto Sans&quot;, &quot;Liberation Sans&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;;font-size:15.4px;\"><span style=\"-webkit-text-stroke-width:0px;box-sizing:border-box;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:300;letter-spacing:normal;orphans:2;scroll-behavior:auto !important;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;\">Tiêu đề màu mặc định, viết thường</span><span style=\"-webkit-text-stroke-width:0px;display:inline !important;float:none;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:300;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;\">.</span></span><span style=\"background-color:rgb(255,255,255);color:rgb(33,37,41);font-family:system-ui, -apple-system, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, &quot;Noto Sans&quot;, &quot;Liberation Sans&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;;font-size:15.4px;\"><span style=\"-webkit-text-stroke-width:0px;display:inline !important;float:none;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:300;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;\"> Hiển thị sau các tin VIP.</span></span></p>', '2025-02-25 18:23:45', '2025-02-25 21:21:13'),
 (14, 'Tin thường', 'Nhỏ', 'Màu mặc định', '#055698', 0, 0, 'https://res.cloudinary.com/dwqmjrxgz/image/upload/v1737970255/PhongTro123/y9toqnk2aqvz7hs1ki8q.jpg', 0, '<p><span style=\"background-color:rgb(255,255,255);color:hsl(207, 94%, 31%);font-family:system-ui, -apple-system, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, &quot;Noto Sans&quot;, &quot;Liberation Sans&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;;font-size:15.4px;\"><span style=\"-webkit-text-stroke-width:0px;box-sizing:border-box;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:300;letter-spacing:normal;orphans:2;scroll-behavior:auto !important;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;\">Tiêu đề màu mặc định, viết thường</span><span style=\"-webkit-text-stroke-width:0px;display:inline !important;float:none;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:300;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;\">.</span></span><span style=\"background-color:rgb(255,255,255);color:rgb(33,37,41);font-family:system-ui, -apple-system, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, &quot;Noto Sans&quot;, &quot;Liberation Sans&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;;font-size:15.4px;\"><span style=\"-webkit-text-stroke-width:0px;display:inline !important;float:none;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:300;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;\"> Hiển thị sau các tin VIP.</span></span></p>', '2025-01-27 09:30:56', '2025-02-25 21:17:04'),
 (15, 'Tin VIP 3', 'Trung bình', 'Màu xanh', '#3763e0', 1, 1, 'https://res.cloudinary.com/dwqmjrxgz/image/upload/v1737970458/PhongTro123/xlh9ac8kjgi9npacqir3.jpg', 2, '<p><span style=\"background-color:rgb(255,255,255);color:hsl(224, 73%, 55%);font-family:system-ui, -apple-system, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, &quot;Noto Sans&quot;, &quot;Liberation Sans&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;;font-size:15.4px;\"><span style=\"-webkit-text-stroke-width:0px;box-sizing:border-box;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:normal;orphans:2;scroll-behavior:auto !important;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;\"><strong>TIÊU ĐỀ IN HOA MÀU XANH</strong></span><span style=\"-webkit-text-stroke-width:0px;display:inline !important;float:none;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:300;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;\">, </span></span><span style=\"background-color:rgb(255,255,255);color:rgb(33,37,41);font-family:system-ui, -apple-system, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, &quot;Noto Sans&quot;, &quot;Liberation Sans&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;;font-size:15.4px;\"><span style=\"-webkit-text-stroke-width:0px;display:inline !important;float:none;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:300;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;\">gắn biểu tượng 2 ngôi sao màu vàng ở tiêu đề tin đăng. Hiển thị sau tin VIP Nổi Bật, Tin VIP 1, Tin VIP 2 và trên các tin khác.</span></span></p>', '2025-01-27 09:34:19', '2025-01-27 09:39:48'),
@@ -291,7 +291,7 @@ INSERT INTO `posttypes` (`id`, `name`, `postSize`, `colorName`, `color`, `upperc
 -- Table structure for table `reports`
 --
 
-CREATE TABLE `reports` (
+CREATE TABLE `Reports` (
   `id` int(11) NOT NULL,
   `postId` int(255) NOT NULL,
   `reporter` varchar(255) NOT NULL,
@@ -308,7 +308,7 @@ CREATE TABLE `reports` (
 -- Table structure for table `sequelizemeta`
 --
 
-CREATE TABLE `sequelizemeta` (
+CREATE TABLE `Sequelizemeta` (
   `name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -316,7 +316,7 @@ CREATE TABLE `sequelizemeta` (
 -- Dumping data for table `sequelizemeta`
 --
 
-INSERT INTO `sequelizemeta` (`name`) VALUES
+INSERT INTO `Sequelizemeta` (`name`) VALUES
 ('20250218175334-create_users.js'),
 ('create-address.js'),
 ('create-attribute.js'),
@@ -338,19 +338,19 @@ INSERT INTO `sequelizemeta` (`name`) VALUES
 -- Table structure for table `timepackages`
 --
 
-CREATE TABLE `timepackages` (
+CREATE TABLE `Timepackages` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `dayCount` int(11) NOT NULL,
-  `createdAt` date NOT NULL DEFAULT current_timestamp(),
-  `updatedAt` date NOT NULL DEFAULT current_timestamp()
+  `createdAt` datetime NOT NULL DEFAULT current_timestamp(),
+  `updatedAt` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `timepackages`
 --
 
-INSERT INTO `timepackages` (`id`, `name`, `dayCount`, `createdAt`, `updatedAt`) VALUES
+INSERT INTO `Timepackages` (`id`, `name`, `dayCount`, `createdAt`, `updatedAt`) VALUES
 (1, 'Đăng theo ngày', 1, '2025-01-22', '2025-01-22'),
 (2, 'Đăng theo tuần', 7, '2025-01-22', '2025-01-22'),
 (3, 'Đăng theo tháng', 30, '2025-01-22', '2025-01-22');
@@ -361,7 +361,7 @@ INSERT INTO `timepackages` (`id`, `name`, `dayCount`, `createdAt`, `updatedAt`) 
 -- Table structure for table `users`
 --
 
-CREATE TABLE `users` (
+CREATE TABLE `Users` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
@@ -384,7 +384,7 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `password`, `role`, `phone`, `email`, `zalo`, `fbUrl`, `avatar`, `verified`, `passwordResetExpireDate`, `passwordResetToken`, `otp`, `otpExpireTime`, `createdAt`, `updatedAt`) VALUES
+INSERT INTO `Users` (`id`, `name`, `password`, `role`, `phone`, `email`, `zalo`, `fbUrl`, `avatar`, `verified`, `passwordResetExpireDate`, `passwordResetToken`, `otp`, `otpExpireTime`, `createdAt`, `updatedAt`) VALUES
 (1, 'Trần Xuân Lâm', '$2a$12$SwduiHeDyAt5p8k0DMGrz.bUCUsCYXn.7IkRtxbFTJ/j1.4nNOfXm', 'user', '0973534773', 'lamtx.3107@gmail.com', NULL, NULL, NULL, 1, NULL, 'f94ef5818a57d81345fc0353d6c85afb248466db842e00f1c5999b1e0e7b77bd', '444751', '2025-08-12 03:45:47', '2025-08-12 03:18:17', '2025-08-12 07:22:12'),
 (2, 'Trần Xuân Lâm', '$2a$12$mxcsIuyftKy5yYt.Zht5Teio1cFipGk/S6DSI9C0TeDXGN68x6QFC', 'user', '0973534773', 'lamdev.3107@gmail.com', NULL, NULL, NULL, 1, NULL, NULL, '399105', '2025-08-12 03:52:50', '2025-08-12 03:42:32', '2025-08-12 07:30:15');
 
@@ -394,7 +394,7 @@ INSERT INTO `users` (`id`, `name`, `password`, `role`, `phone`, `email`, `zalo`,
 -- Table structure for table `wishlists`
 --
 
-CREATE TABLE `wishlists` (
+CREATE TABLE `Wishlists` (
   `id` int(11) NOT NULL,
   `userId` int(255) NOT NULL,
   `postId` int(255) NOT NULL,
@@ -409,33 +409,33 @@ CREATE TABLE `wishlists` (
 --
 -- Indexes for table `addresses`
 --
-ALTER TABLE `addresses`
+ALTER TABLE `Addresses`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_address_post` (`postId`);
 
 --
 -- Indexes for table `attributes`
 --
-ALTER TABLE `attributes`
+ALTER TABLE `Attributes`
   ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `categories`
 --
-ALTER TABLE `categories`
+ALTER TABLE `Categories`
   ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `images`
 --
-ALTER TABLE `images`
+ALTER TABLE `Images`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_image_post` (`postId`);
 
 --
 -- Indexes for table `postattributes`
 --
-ALTER TABLE `postattributes`
+ALTER TABLE `Postattributes`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_postattribute_attribute` (`attributeId`),
   ADD KEY `fk_postattribute_post` (`postId`);
@@ -443,7 +443,7 @@ ALTER TABLE `postattributes`
 --
 -- Indexes for table `postpackages`
 --
-ALTER TABLE `postpackages`
+ALTER TABLE `Postpackages`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_postpackage_posttype` (`postTypeId`),
   ADD KEY `fk_postpackage_timepackage` (`timePackageId`) USING BTREE;
@@ -451,7 +451,7 @@ ALTER TABLE `postpackages`
 --
 -- Indexes for table `postpayments`
 --
-ALTER TABLE `postpayments`
+ALTER TABLE `Postpayments`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_postpayment_post` (`postId`),
   ADD KEY `fk_postpayment_user` (`userId`),
@@ -460,7 +460,7 @@ ALTER TABLE `postpayments`
 --
 -- Indexes for table `posts`
 --
-ALTER TABLE `posts`
+ALTER TABLE `Posts`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_post_category` (`categoryId`),
   ADD KEY `fk_post_user` (`userId`);
@@ -468,39 +468,39 @@ ALTER TABLE `posts`
 --
 -- Indexes for table `posttypes`
 --
-ALTER TABLE `posttypes`
+ALTER TABLE `Posttypes`
   ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `reports`
 --
-ALTER TABLE `reports`
+ALTER TABLE `Reports`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_report_post` (`postId`);
 
 --
 -- Indexes for table `sequelizemeta`
 --
-ALTER TABLE `sequelizemeta`
+ALTER TABLE `Sequelizemeta`
   ADD PRIMARY KEY (`name`),
   ADD UNIQUE KEY `name` (`name`);
 
 --
 -- Indexes for table `timepackages`
 --
-ALTER TABLE `timepackages`
+ALTER TABLE `Timepackages`
   ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `users`
 --
-ALTER TABLE `users`
+ALTER TABLE `Users`
   ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `wishlists`
 --
-ALTER TABLE `wishlists`
+ALTER TABLE `Wishlists`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_wishlist_user` (`userId`),
   ADD KEY `fk_wishlist_post` (`postId`);
@@ -512,79 +512,79 @@ ALTER TABLE `wishlists`
 --
 -- AUTO_INCREMENT for table `addresses`
 --
-ALTER TABLE `addresses`
+ALTER TABLE `Addresses`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `attributes`
 --
-ALTER TABLE `attributes`
+ALTER TABLE `Attributes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `categories`
 --
-ALTER TABLE `categories`
+ALTER TABLE `Categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `images`
 --
-ALTER TABLE `images`
+ALTER TABLE `Images`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 
 --
 -- AUTO_INCREMENT for table `postattributes`
 --
-ALTER TABLE `postattributes`
+ALTER TABLE `Postattributes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=175;
 
 --
 -- AUTO_INCREMENT for table `postpackages`
 --
-ALTER TABLE `postpackages`
+ALTER TABLE `Postpackages`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `postpayments`
 --
-ALTER TABLE `postpayments`
+ALTER TABLE `Postpayments`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
 
 --
 -- AUTO_INCREMENT for table `posts`
 --
-ALTER TABLE `posts`
+ALTER TABLE `Posts`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `posttypes`
 --
-ALTER TABLE `posttypes`
+ALTER TABLE `Posttypes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `reports`
 --
-ALTER TABLE `reports`
+ALTER TABLE `Reports`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `timepackages`
 --
-ALTER TABLE `timepackages`
+ALTER TABLE `Timepackages`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
-ALTER TABLE `users`
+ALTER TABLE `Users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `wishlists`
 --
-ALTER TABLE `wishlists`
+ALTER TABLE `Wishlists`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -594,53 +594,53 @@ ALTER TABLE `wishlists`
 --
 -- Constraints for table `addresses`
 --
-ALTER TABLE `addresses`
+ALTER TABLE `Addresses`
   ADD CONSTRAINT `fk_address_post` FOREIGN KEY (`postId`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `images`
 --
-ALTER TABLE `images`
+ALTER TABLE `Images`
   ADD CONSTRAINT `fk_image_post` FOREIGN KEY (`postId`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `postattributes`
 --
-ALTER TABLE `postattributes`
+ALTER TABLE `Postattributes`
   ADD CONSTRAINT `fk_postattribute_attribute` FOREIGN KEY (`attributeId`) REFERENCES `attributes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_postattribute_post` FOREIGN KEY (`postId`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `postpackages`
 --
-ALTER TABLE `postpackages`
+ALTER TABLE `Postpackages`
   ADD CONSTRAINT `fk_postpackage_posttype` FOREIGN KEY (`postTypeId`) REFERENCES `posttypes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_postpackage_timepackage` FOREIGN KEY (`timePackageId`) REFERENCES `timepackages` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `postpayments`
 --
-ALTER TABLE `postpayments`
+ALTER TABLE `Postpayments`
   ADD CONSTRAINT `fk_postpayment_post` FOREIGN KEY (`postId`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_postpayment_postpackage` FOREIGN KEY (`postPackageId`) REFERENCES `postpackages` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `posts`
 --
-ALTER TABLE `posts`
+ALTER TABLE `Posts`
   ADD CONSTRAINT `fk_post_category` FOREIGN KEY (`categoryId`) REFERENCES `categories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_post_user` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `reports`
 --
-ALTER TABLE `reports`
+ALTER TABLE `Reports`
   ADD CONSTRAINT `fk_report_post` FOREIGN KEY (`postId`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `wishlists`
 --
-ALTER TABLE `wishlists`
+ALTER TABLE `Wishlists`
   ADD CONSTRAINT `fk_wishlist_post` FOREIGN KEY (`postId`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_wishlist_user` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
