@@ -3,7 +3,7 @@
     "username": "root",
     "password": "root",
     "database": "phongtro123",
-    "host": "mysql",
+    "host": "localhost",
     "dialect": "mysql",
     "logging": false
   },

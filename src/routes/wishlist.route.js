@@ -3,8 +3,7 @@ import { verifyAccessToken } from "../middlewares/auth.middleware";
 import * as wishlistController from "../controllers/wishlist.controller";
 const router = express.Router();
 
-router.post("/", verifyAccessToken, wishlistController.createWishlist);
-router.delete("/:id", verifyAccessToken, wishlistController.deleteWishlist);
+router.post("/", verifyAccessToken, wishlistController.toggleWishlistItem);
 router.get("/", verifyAccessToken, wishlistController.getWishlistOfUser);
 router.get(
   "/posts/:postId",

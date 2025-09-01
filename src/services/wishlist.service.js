@@ -11,8 +11,10 @@ const createWishlist = async (postId, userId) => {
 
 const deleteWishlist = async (id, userId) => {
   try {
-    await db.Wishlist.destroy({ where: { id, userId } });
-    return true;
+    const deletedWishlist = await db.Wishlist.destroy({
+      where: { postId: id, userId },
+    });
+    return deletedWishlist;
   } catch (err) {
     throw err;
   }

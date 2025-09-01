@@ -10,6 +10,8 @@ import timePackageRouter from "./timePackage.route";
 import postPaymentRouter from "./postPayment.route";
 import paymentRouter from "./payment.route";
 import meRouter from "./me.route";
+import wishlistRouter from "./wishlist.route";
+import addressRouter from "./address.route";
 import { errorHandlingMiddleware } from "../middlewares/errorHandlingMiddleware";
 import rateLimit from "express-rate-limit";
 const apiLimiter = rateLimit({
@@ -43,7 +45,8 @@ const initRoutes = (app) => {
   app.use("/api/v1/post-payments", postPaymentRouter);
   app.use("/api/v1/me", meRouter);
   app.use("/api/v1/payment", paymentRouter);
-  app.use("/api/v1/address", wishlistRouter);
+  app.use("/api/v1/wishlists", wishlistRouter);
+  app.use("/api/v1/address", addressRouter);
 
   //Error handling
   app.use(errorHandlingMiddleware);

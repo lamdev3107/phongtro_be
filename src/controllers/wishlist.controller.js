@@ -1,27 +1,21 @@
 import * as wishlistService from "../services/wishlist.service";
 
-const createWishlist = async (req, res, next) => {
+const toggleWishlistItem = async (req, res, next) => {
   try {
     const { postId } = req.body;
     const userId = req.user.id;
-    const wishlist = await wishlistService.createWishlist(postId, userId);
+    const wishlistStatus = await wishlistService.checkInWishlist(
+      postId,
+      userId
+    );
+    if (!!wishlistStatus) {
+      await wishlistService.deleteWishlist(postId, userId);
+    } else {
+      await wishlistService.createWishlist(postId, userId);
+    }
     res.status(201).json({
-      message: "Wishlist created successfully",
-      data: wishlist,
-      success: true,
-    });
-  } catch (err) {
-    next(err);
-  }
-};
-
-const deleteWishlist = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const userId = req.user.id;
-    await wishlistService.deleteWishlist(id, userId);
-    res.status(200).json({
-      message: "Wishlist deleted successfully",
+      message: "Wishlist toggled successfully",
+      data: wishlistStatus,
       success: true,
     });
   } catch (err) {
@@ -46,10 +40,13 @@ const checkInWishlist = async (req, res, next) => {
   try {
     const { postId } = req.params;
     const userId = req.user.id;
-    const res = await wishlistService.checkInWishlist(postId, userId);
-    return res.status(200).json({
+    const wishlistStatus = await wishlistService.checkInWishlist(
+      postId,
+      userId
+    );
+    res.status(200).json({
       message: "Wishlist checked successfully",
-      data: !!res,
+      data: !!wishlistStatus,
       success: true,
     });
   } catch (err) {
@@ -57,4 +54,4 @@ const checkInWishlist = async (req, res, next) => {
   }
 };
 
-export { createWishlist, deleteWishlist, getWishlistOfUser, checkInWishlist };
+export { toggleWishlistItem, getWishlistOfUser, checkInWishlist };

@@ -14,7 +14,7 @@ const getProvinces = async (req, res, next) => {
 };
 const getDistricts = async (req, res, next) => {
   try {
-    const districts = await addressService.getDistricts(req.params.provinceId);
+    const districts = await addressService.getDistricts(req.query.provinceId);
     return res.status(200).json({
       success: true,
       message: "Districts fetched successfully",
@@ -26,7 +26,7 @@ const getDistricts = async (req, res, next) => {
 };
 const getWards = async (req, res, next) => {
   try {
-    const wards = await addressService.getWards(req.params.districtId);
+    const wards = await addressService.getWards(req.query.districtId);
     return res.status(200).json({
       success: true,
       message: "Wards fetched successfully",
