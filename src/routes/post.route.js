@@ -18,6 +18,7 @@ router.put(
   upload.array("images", 20),
   postController.updatePost
 );
+router.put("/:id/status", verifyAccessToken, postController.updatePostStatus);
 router.get("/", postController.getPosts);
 
 export default router;

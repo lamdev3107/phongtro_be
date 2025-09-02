@@ -96,36 +96,95 @@ export const getPostService = async (id) => {
   }
 };
 
-const getPostsService = async (
-  orderBy = "createdAt",
-  order = "desc",
-  page = 1,
-  limit = 10
-) => {
+const updatePostStatusService = async (id, status) => {
   try {
+    const post = await db.Post.findByPk(id);
+    if (!post) {
+      throw new ApiError(StatusCodes.NOT_FOUND, "Post not found!");
+    }
+    if (post.status === PostStatus.EXPIRED) {
+      throw new ApiError(StatusCodes.BAD_REQUEST, "Post đã hết hạn!");
+    }
+    const updatedPost = await db.Post.update({ status }, { where: { id } });
+    return updatedPost;
+  } catch (err) {
+    throw err;
+  }
+};
+
+const getPostsService = async (query) => {
+  try {
+    let {
+      soryBy, // client gửi lên là soryBy (có thể là typo, nên giữ nguyên)
+      order,
+      page,
+      limit,
+      provinceId,
+      districtId,
+      wardId,
+      categoryId,
+      minPrice,
+      maxPrice,
+      status,
+      acreage,
+      attributes,
+    } = query;
+
+    // Thiết lập giá trị mặc định nếu không truyền lên
+    soryBy = soryBy || "createdAt";
+    order = order || "desc";
+    page = parseInt(page) || 1;
+    limit = parseInt(limit) || 10;
+    status = status || PostStatus.ACTIVE;
     const allowedFields = ["createdAt", "postType"];
     const allowedOrders = ["asc", "desc"];
-    const orderField = allowedFields.includes(orderBy) ? orderBy : "createdAt";
+    const orderField = allowedFields.includes(soryBy) ? soryBy : "createdAt";
     const orderDirection = allowedOrders.includes(order.toLowerCase())
       ? order.toLowerCase()
       : "desc";
 
     const offset = (parseInt(page) - 1) * parseInt(limit);
 
+    // Xây dựng where cho Post
+    let where = {};
+    if (status) where.status = status;
+    if (categoryId) where.categoryId = categoryId;
+    if (minPrice)
+      where.price = { ...(where.price || {}), [db.Sequelize.Op.gte]: minPrice };
+    if (maxPrice)
+      where.price = { ...(where.price || {}), [db.Sequelize.Op.lte]: maxPrice };
+    if (acreage) where.acreage = acreage;
+
+    // Xây dựng where cho Address
+    let addressWhere = {};
+    if (provinceId) addressWhere.province = provinceId;
+    if (districtId) addressWhere.district = districtId;
+    if (wardId) addressWhere.ward = wardId;
+
+    // Xây dựng where cho attributes (nếu có)
+    let attributesInclude = [];
+    if (attributes && Array.isArray(attributes) && attributes.length > 0) {
+      attributesInclude = [
+        {
+          model: db.PostAttribute,
+          as: "postAttributes",
+          where: {
+            attributeId: {
+              [db.Sequelize.Op.in]: attributes,
+            },
+          },
+          required: true,
+        },
+      ];
+    }
+
     // Truy vấn
-    const { rows: posts, count } = await db.Post.findAndCountAll({
-      attributes: [
-        "id",
-        "title",
-        "slug",
-        "price",
-        "priceUnit",
-        "status",
-        "acreage",
-        "description",
-        "createdAt",
-        "updatedAt",
-      ],
+    // Giải pháp: Không dùng group + findAndCountAll, mà tách 2 query: 1 query lấy danh sách, 1 query đếm tổng số bản ghi
+    // Lý do: Khi dùng group + join nhiều bảng, MySQL với ONLY_FULL_GROUP_BY sẽ báo lỗi nếu các cột không nằm trong group by hoặc không dùng hàm aggregate
+
+    // 1. Lấy danh sách bài đăng (có join các bảng liên quan)
+    const posts = await db.Post.findAll({
+      where,
       include: [
         {
           model: db.Category,
@@ -141,6 +200,9 @@ const getPostsService = async (
           model: db.Address,
           as: "address",
           attributes: ["addressString", "province", "district", "ward"],
+          where:
+            Object.keys(addressWhere).length > 0 ? addressWhere : undefined,
+          required: Object.keys(addressWhere).length > 0,
         },
         {
           model: db.User,
@@ -155,7 +217,6 @@ const getPostsService = async (
             {
               model: db.PostPackage,
               as: "postPackage",
-              attributes: [],
               include: [
                 {
                   model: db.TimePackage,
@@ -169,14 +230,41 @@ const getPostsService = async (
             },
           ],
         },
+        ...attributesInclude,
       ],
-      group: ["Post.id"], // Nhóm theo ID của Post để tránh nhân bản do JOIN
-      subQuery: false, // Tránh nhân bản bản ghi khi JOIN với bảng con
       order: [[orderField, orderDirection]],
       limit: parseInt(limit),
       offset: offset,
       logging: console.log, // Log SQL để debug
+      subQuery: false,
     });
+
+    // 2. Đếm tổng số bản ghi (không join các bảng con để tránh nhân bản)
+    // Nếu có filter theo address thì phải join bảng Address để đếm đúng
+    let count;
+    if (Object.keys(addressWhere).length > 0) {
+      count = await db.Post.count({
+        where,
+        include: [
+          {
+            model: db.Address,
+            as: "address",
+            where: addressWhere,
+            required: true,
+          },
+          ...attributesInclude,
+        ],
+        distinct: true,
+        col: "Post.id",
+      });
+    } else {
+      count = await db.Post.count({
+        where,
+        include: [...attributesInclude],
+        distinct: true,
+        col: "id", // Sử dụng "id" thay vì "Post.id"
+      });
+    }
 
     return {
       data: posts,
@@ -387,4 +475,5 @@ export {
   updatePostService,
   getPostsService,
   checkExpiredPostService,
+  updatePostStatusService,
 };

@@ -119,18 +119,27 @@ const getPostPaymentOfPost = async (req, res, next) => {
 
 const getPosts = async (req, res, next) => {
   try {
-    const {
-      orderby = "createdAt", // Giá trị mặc định là sắp xếp theo thời gian
-      order = "desc", // Giá trị mặc định là giảm dần (mới nhất trước)
-      page = 1,
-      limit = 10,
-    } = req.query;
+    const data = await postService.getPostsService(req.query);
 
-    const data = await postService.getPostsService(orderby, order, page, limit);
     return res.status(200).json({
       success: true,
       message: "Get posts successfully",
       ...data,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const updatePostStatus = async (req, res, next) => {
+  const { id } = req.params;
+  const { status } = req.body;
+  try {
+    const updatedPost = await postService.updatePostStatusService(id, status);
+    return res.status(200).json({
+      success: true,
+      message: "Update post status successfully",
+      data: updatedPost,
     });
   } catch (err) {
     next(err);
@@ -149,4 +158,11 @@ export const getNewPosts = async (req, res) => {
   }
 };
 
-export { createNewPost, getPost, updatePost, getPosts, getPostPaymentOfPost };
+export {
+  createNewPost,
+  getPost,
+  updatePost,
+  getPosts,
+  getPostPaymentOfPost,
+  updatePostStatus,
+};
