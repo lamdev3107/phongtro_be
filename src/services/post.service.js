@@ -235,7 +235,7 @@ const getPostsService = async (query) => {
       order: [[orderField, orderDirection]],
       limit: parseInt(limit),
       offset: offset,
-      logging: console.log, // Log SQL để debug
+      // logging: console.log, // Log SQL để debug
       subQuery: false,
     });
 
@@ -255,14 +255,14 @@ const getPostsService = async (query) => {
           ...attributesInclude,
         ],
         distinct: true,
-        col: "Post.id",
+        col: "id",
       });
     } else {
       count = await db.Post.count({
         where,
         include: [...attributesInclude],
         distinct: true,
-        col: "id", // Sử dụng "id" thay vì "Post.id"
+        col: "id",
       });
     }
 
